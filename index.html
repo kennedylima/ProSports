@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>ProSports</title>
+
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+
+    <script src="app/app.js"></script>
+    <script src="app/Produto/produtoController.js"></script>
+
+</head>
+<body ng-controller="produtoController">
+
+    <div ng-repeat="produto in produtos" ng-show="produtos.length < 0">
+        {{produto.descricao}}
+        {{produto.valor}}
+    </div>
+
+    <div ng-show="produto.descricao != ''">
+        {{produto.descricao}}
+        {{produto.valor}}
+    </div>
+
+    <md-radio-group ng-model="acao">
+        <md-radio-button value="cadastrar" name="exibir" class="md-primary">Cadastrar</md-radio-button>
+        <md-radio-button value="listar" name="exibir" class="md-primary"> Listar</md-radio-button>
+    </md-radio-group>
+
+    <md-card ng-repeat="produto in produtos" ng-show="acao == 'listar'">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline" name="{{produto$index}}">{{produto.descricao}}</span>
+                <span class="md-subhead">R$:{{produto.valor}},00</span>
+            </md-card-title-text>
+            <md-card-title-media>
+                <div class="md-media-lg card-media">
+                    <img ng-src="{{produto.url}}" style="max-height: 150px; max-width: 150px">
+
+                </div>
+            </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+
+            <md-button class="md-icon-button" aria-label="Adicionar ao Carrinho">
+                <md-icon md-svg-icon="app/icones/ic_adicionar_ao_carrinho.svg"></md-icon>
+            </md-button>
+
+            <md-button ng-click="remover(produto)" class="md-icon-button" aria-label="Remover">
+                <md-icon md-svg-icon="app/icones/ic_remover.svg"></md-icon>
+            </md-button>
+
+        </md-card-actions>
+    </md-card>
+
+    <md-card ng-show="acao == 'cadastrar'">
+        <md-input-container>
+            <label>Descricao</label>
+            <input type="text" ng-model="produto.descricao">
+        </md-input-container>
+
+        <md-input-container>
+            <label>Valor</label>
+            <input type="number" ng-model="produto.valor">
+        </md-input-container>
+
+        <md-input-container>
+            <label>URL</label>
+            <input type="text" ng-model="produto.url">
+        </md-input-container>
+
+        <md-button class="md-raised md-primary" ng-click="salvar()">Salvar</md-button>
+    </md-card>
+
+
+
+</body>
+</html>
