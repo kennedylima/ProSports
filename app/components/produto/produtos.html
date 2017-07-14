@@ -1,0 +1,29 @@
+<md-card ng-repeat="produto in produtos">
+    <md-card-title>
+        <md-card-title-text>
+            <span class="md-headline" name="{{produto$index}}">{{produto.descricao}}</span>
+            <span class="md-subhead">R$:{{produto.valor}},00</span>
+        </md-card-title-text>
+        <md-card-title-media>
+            <div class="md-media-lg card-media">
+                <img ng-src="{{produto.url}}" style="max-height: 150px; max-width: 150px">
+
+            </div>
+        </md-card-title-media>
+    </md-card-title>
+    <md-card-actions layout="row" layout-align="end center">
+
+        <md-button class="md-icon-button" aria-label="Adicionar ao Carrinho">
+            <md-icon md-svg-icon="app/icones/ic_adicionar_ao_carrinho.svg"></md-icon>
+        </md-button>
+
+        <md-button ng-click="editar(produto)" class="md-icon-button" aria-label="Editar">
+            <md-icon md-svg-icon="app/icones/ic_editar.svg"></md-icon>
+        </md-button>
+
+        <md-button ng-click="remover(produto)" class="md-icon-button" aria-label="Remover">
+            <md-icon md-svg-icon="app/icones/ic_remover.svg"></md-icon>
+        </md-button>
+
+    </md-card-actions>
+</md-card>
