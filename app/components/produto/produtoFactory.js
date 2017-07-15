@@ -1,19 +1,22 @@
-app.factory('produtoFactory',function () {
-    var produtoFatory = {};
+app.factory("produtoFactory", function ($http, $q) {
 
+    this.getProdutos = function () {
+        var defer = $q.defer();
+        $http({
+            method: 'GET',
+            url: 'http://localhost:8080/produto'
+        }).then(function successCallback(response) {
 
-    produtoFatory.set = function(produto){
-        this.produto = produto;
+            defer.resolve(response);
+
+        }, function errorCallback(response) {
+
+            defer.reject(response);
+        });
+
+        return defer.promise;
     }
 
-    produtoFatory.getProduto = function () {
-        return this.produto;
-    }
 
-    produtoFatory.removerProduto = function () {
-        this.produto = {};
-    }
-
-    
-    return produtoFatory;
+    return this;
 })

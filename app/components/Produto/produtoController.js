@@ -1,16 +1,25 @@
-app.controller("produtoController", function ($scope,$http,$location, produtoFactory) {
-    $scope.produto = produtoFactory.getProduto();
+app.controller("produtoController", function ($scope,$http,$location, produtoService) {
+    $scope.produto = produtoService.getProduto();
 
     var buscarProdutos = function () {
-        $http({
-            method: 'GET',
-            url: 'http://localhost:8080/produto'
-        }).then(function successCallback(response) {
-            $scope.produtos = response.data;
-        }, function errorCallback(response) {
-            window.alert("Erro ao buscar os produtos");
-        });
+        produtoService.getProdutos(
+            function (response, errorResponse) {
+                if(!errorResponse){
+                    $scope.produtos = response.data;
+                }
+            }
+        );
     }
+
+
+    /*$http({
+     method: 'GET',
+     url: 'http://localhost:8080/produto'
+     }).then(function successCallback(response) {
+     $scope.produtos = response.data;
+     }, function errorCallback(response) {
+     window.alert("Erro ao buscar os produtos");
+     });*/
 
     buscarProdutos();
 
@@ -23,7 +32,7 @@ app.controller("produtoController", function ($scope,$http,$location, produtoFac
                 url: 'http://localhost:8080/produto'
             }).then(function successCallback(response) {
                 $scope.produto = {};
-                produtoFactory.removerProduto();
+                produtoService.removerProduto();
                 buscarProdutos();
                 window.alert("Salvo com sucesso !");
             }, function errorCallback(response) {
@@ -50,7 +59,8 @@ app.controller("produtoController", function ($scope,$http,$location, produtoFac
     }
 
     $scope.editar = function (produto) {
-        produtoFactory.set(produto);
+        $scope.produto = produto;
+        produtoService.set(produto);
         $location.path('produto');
     }
 
@@ -61,7 +71,7 @@ app.controller("produtoController", function ($scope,$http,$location, produtoFac
             url: 'http://localhost:8080/produto'
         }).then(function successCallback(response) {
             $scope.produto = {};
-            produtoFactory.removerProduto();
+            produtoService.removerProduto();
             buscarProdutos();
             window.alert("Alterado com sucesso !");
         }, function errorCallback(response) {
